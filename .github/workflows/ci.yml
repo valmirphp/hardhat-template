@@ -55,4 +55,6 @@ jobs:
       - name: Report Gas Usage
         run: |
           echo "## Report Gas Usage" >> $GITHUB_STEP_SUMMARY
+          echo "```shell" >> $GITHUB_STEP_SUMMARY
           REPORT_GAS=true npx hardhat --network hardhat test >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
