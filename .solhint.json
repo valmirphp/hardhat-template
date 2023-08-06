@@ -3,6 +3,7 @@
   "plugins": ["prettier"],
   "rules": {
     "code-complexity": ["error", 8],
+    "reason-string": ["warn", { "maxLength": 40 }],
     "compiler-version": ["error", ">=0.8.4"],
     "func-visibility": ["error", { "ignoreConstructors": true }],
     "max-line-length": ["error", 120],
