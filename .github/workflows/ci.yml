@@ -26,7 +26,8 @@ jobs:
           node-version: "18"
 
       - name: "Yarn install"
-        run: "yarn install --immutable"
+        run: "yarn install"
+        # run: "yarn install --immutable" // TODO
 
       - name: "Lint the code"
         run: "yarn lint"
