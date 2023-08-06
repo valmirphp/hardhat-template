@@ -19,7 +19,9 @@
   "scripts": {
     "clean": "rimraf .hardhat/artifacts ./cache ./coverage ./types ./coverage.json && yarn typechain",
     "compile": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat compile",
-    "coverage": "hardhat coverage --solcoverjs ./.solcover.js --temp .hardhat/artifacts --testfiles \\\"test/**/*.ts\\\" && yarn typechain",
+    "coverage": "yarn coverage:run && yarn coverage:check",
+    "coverage:run": "hardhat coverage --solcoverjs ./.solcover.js --temp .hardhat/artifacts --testfiles \\\"test/**/*.ts\\\" && yarn typechain",
+    "coverage:check": "npx istanbul check-coverage ./coverage.json --statements 70 --branches 70 --functions 70 --lines 70",
     "deploy:contracts": "hardhat deploy",
     "lint": "yarn lint:sol && yarn lint:ts && yarn prettier:check",
     "lint:sol": "solhint --max-warnings 0 \"contracts/**/*.sol\"",
