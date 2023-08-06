@@ -1,78 +1,149 @@
 # Hardhat Template
 
 [![Open in Gitpod][gitpod-badge]][gitpod] [![Github Actions][gha-badge]][gha] [![Hardhat][hardhat-badge]][hardhat]
-[![License: MIT][license-badge]][license]
+[![built-with openzeppelin][openzeppelin-badge]][openzeppelin] [![License: MIT][license-badge]][license]
 
 [gitpod]: https://gitpod.io/#https://github.com/valmirphp/hardhat-template
 [gitpod-badge]: https://img.shields.io/badge/Gitpod-Open%20in%20Gitpod-FFB45B?logo=gitpod
 [gha]: https://github.com/valmirphp/hardhat-template/actions
 [gha-badge]: https://github.com/valmirphp/hardhat-template/actions/workflows/ci.yml/badge.svg
+[openzeppelin-badge]: https://img.shields.io/badge/built%20with-OpenZeppelin-3677FF
+[openzeppelin]: https://docs.openzeppelin.com/
 [hardhat]: https://hardhat.org/
 [hardhat-badge]: https://img.shields.io/badge/Built%20with-Hardhat-FFDB1C.svg
 [license]: https://opensource.org/licenses/MIT
 [license-badge]: https://img.shields.io/badge/License-MIT-blue.svg
 
-Um modelo baseado em Hardhat para desenvolvimento de contratos inteligentes em Solidity, com configurações necessárias.
+Um template baseado em Hardhat para desenvolvimento de contratos inteligentes em Solidity, com configurações
+necessárias.
 
 - [Hardhat](https://github.com/nomiclabs/hardhat): compilar, executar e testar contratos inteligentes
 - [TypeChain](https://github.com/ethereum-ts/TypeChain): gerar ligações TypeScript para contratos inteligentes
 - [Ethers](https://github.com/ethers-io/ethers.js/): renomada biblioteca Ethereum e implementação de carteira
 - [Solhint](https://github.com/protofire/solhint): lint de código
 - [Solcover](https://github.com/sc-forks/solidity-coverage): cobertura de código
-- [Prettier Plugin Solidity](https://github.com/prettier-solidity/prettier-plugin-solidity): formatador de código
+- [Alchemy](https://www.alchemy.com): SDK web3 e API de nó de rede
+- [OpenZeppelin][openzeppelin]: O padrão para aplicações seguras de blockchain.
 
 ## Começando
-
-## Getting Started
 
 Clique no botão [`Use este modelo`](https://github.com/valmirphp/hardhat-template/generate) no topo da página para criar
 um novo repositório com este repositório como estado inicial.
 
-## Recursos
+## Hardhat 🦺
 
-Este modelo baseia-se nos frameworks e bibliotecas mencionados acima, portanto, para detalhes sobre suas características
-específicas, consulte suas respectivas documentações.
+Este template baseia-se nos frameworks e bibliotecas mencionados acima, portanto, para detalhes sobre suas
+características específicas, consulte suas respectivas documentações.
 
 Por exemplo, para o Hardhat, você pode consultar o [Tutorial Hardhat](https://hardhat.org/tutorial) e a
 [Documentação Hardhat](https://hardhat.org/docs). Você pode estar particularmente interessado em ler a seção de
 [Testando Contratos](https://hardhat.org/tutorial/testing-contracts).
 
-### Configurações
+### Redes suportadas
 
-Este template vem com configurações padrão sensatas nos seguintes arquivos:
+- Arbitrum
+- Avalanche
+- Binance Smart Chain
+- Hardhat
+- ETH Mainnet
+- ETH Sepolia (Testnet)
+- Optimism Mainnet
+- Polygon Mainnet
+- Polygon Mumbai (Testnet)
+- Ganache
+- Localhost (Hardhat node console)
+
+### Nó de rede Hardhat
+
+Execute um nó de rede local do Hardhat:
+
+```sh
+$ yarn hardhat node
+```
+
+> **Nota**: você pode executar os comandos hardhat passando a flag `--network localhost` para usar o nó local.
+
+### Hardhat Console
+
+Execute o console do Hardhat:
+
+```sh
+$ yarn hardhat console
+```
+
+Experimente o seguinte comando no console:
+
+```sh
+$ await ethers.provider.getBlockNumber()
+$ const greeter = await ethers.deployContract("Greeter", ["Olá Mundo"]);
+$ await ethers.provider.getBlockNumber()
+$ await greeter.greet()
+$ await greeter.setGreeting("Olá Hardhat!")
+$ await greeter.greet()
+$ const signers = await ethers.getSigners()
+$ greeter.connect(signers[1]).pause()
+```
+
+> **Nota**: veja mais detalhes em [Hardhat Console](https://hardhat.org/hardhat-runner/docs/guides/hardhat-console)
+
+### Autocompletar comando Hardhat
+
+Para autocompletar os comandos do Hardhat, execute o seguinte comando:
+
+```sh
+$ npm install --global hardhat-shorthand
+$ hardhat-completion install
+```
+
+> **Nota**: Veja mais detalhes em
+> [hardhat-shorthand](https://hardhat.org/hardhat-runner/docs/guides/command-line-completion)
+
+## Configurações
+
+Este template vem com configurações recomendas nos seguintes arquivos:
 
 ```text
 ├── .editorconfig
 ├── .eslintignore
 ├── .eslintrc.yml
 ├── .gitignore
+├── .gitpod.yml
+├── .mocharc.json
 ├── .prettierignore
 ├── .prettierrc.yml
 ├── .solcover.js
 ├── .solhint.json
+├── .solhintignore
+├── .yarnrc.yml
+├── tsconfig.json
+├── hardhat.utils.ts
 └── hardhat.config.ts
 ```
 
-### GitHub Actions
+## GitHub Actions
 
-Este modelo já vem com o GitHub Actions pré-configurado. Seus contratos serão verificados e testados a cada push e pull
-request feito para a branch `main`.
+Este template já vem com o GitHub Actions pré-configurado. Seus contratos serão verificados e testados a cada push e
+pull request feito para a branch `main`.
 
 No entanto, para que isso funcione, você deve usar suas chaves secretas do GitHub `INFURA_API_KEY` e seu `MNEMONIC`.
 
 Você pode editar o script de Integração Contínua (CI) em [.github/workflows/ci.yml](.github/workflows/ci.yml).
 
-#### Workflow de CI
+### Workflow de CI
 
 O fluxo de trabalho de CI é executado em cada push e pull request para a branch `main`. Ele executa os seguintes passos:
 
-✅ Setup Node18x ✅ Lint (solhint + prettier + TS eslint) ✅ Typechain (compile os contratos e gere os tipos TS) ✅
-Testes unitários (mocha) ✅ Testes de cobertura (quando não atingir % de cobertura deseja o CI falha) ✅ Executa as
-tasks do hardhat ✅ Relatório de consumo de gás
+- ✅ Setup Node18x
+- ✅ Lint (solhint + prettier + TS eslint)
+- ✅ Typechain (compile os contratos e gere os tipos TS)
+- ✅ Testes unitários (mocha)
+- ✅ Testes de cobertura (quando não atingir % de cobertura deseja o CI falha)
+- ✅ Executa as tasks do hardhat
+- ✅ Relatório de consumo de gás
 
 ## IDEs
 
-Este modelo é independente de IDE, mas para obter a melhor experiência do usuário, deixamos algumas configurações para
+Este template é independente de IDE, mas para obter a melhor experiência do usuário, deixamos algumas configurações para
 facilitar o uso com o VSCode e WebStorm.
 
 ### Integração com VSCode
@@ -103,7 +174,7 @@ Em seguida, prossiga com a instalação das dependências:
 $ yarn install
 ```
 
-### Configuração
+### Variáveis de ambiente
 
 Além das variáveis de ambiente mencionadas acima, em caso de uso de uma rede `mainnet` recomenda-se a criação de um
 arquivo criptografado `.env.enc` com a chave privada da carteira que será usada para implantar os contratos
@@ -124,6 +195,12 @@ Na sequencia, execute o comando a baixo, e informe o nome da chave: `HW_PRIVATE_
 ```sh
 $ yarn envc:set
 ```
+
+### Extensões de contratos
+
+Este template já possui a lib [OpenZeppelin Contracts](https://www.openzeppelin.com/contracts/) instalada.
+
+Gere seu contrato com o [Wizard do OpenZeppelin](https://wizard.openzeppelin.com).
 
 ### Compilar
 
@@ -202,14 +279,6 @@ Exclua os artefatos dos contratos inteligentes, os relatórios de cobertura e o 
 $ yarn clean
 ```
 
-### Deploy
-
-Implante os contratos na rede Hardhat:
-
-```sh
-$ yarn deploy:contracts
-```
-
 ### Tasks
 
 #### Deploy Greeter
@@ -226,6 +295,16 @@ Execute a tarefa `setGreeting` na rede testnet sepolia:
 
 ```sh
 $ yarn task:setGreeting --network sepolia --greeting "Bonjour, le monde!" --account 3
+```
+
+## Deploy
+
+### Implantação de contrato
+
+Implante os contratos na rede Hardhat:
+
+```sh
+$ yarn deploy:contracts
 ```
 
 ### Verificação de contrato
@@ -268,6 +347,8 @@ Make sure to set the mnemonic in your `.env` file to that of the instance runnin
 
 Este projeto está licenciado sob a Licença MIT.
 
-## Fork do projeto
+Fique à vontade para usar o código como quiser, mas não se esqueça de dar crédito quando apropriado.
 
-- [PaulRBerg/hardhat-template](https://github.com/PaulRBerg/hardhat-template)
+## Projeto baseado em
+
+Este repositório foi forkado do projeto [PaulRBerg/hardhat-template](https://github.com/PaulRBerg/hardhat-template).

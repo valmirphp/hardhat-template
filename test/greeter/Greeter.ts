@@ -1,25 +1,22 @@
+import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/dist/src/signer-with-address";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import type { Signers } from "../types";
 import { deployGreeterFixture } from "./Greeter.fixture";
 
 describe("Contract Greeter", function () {
+  let adminSigner: SignerWithAddress;
+  let userSigner: SignerWithAddress;
+
   before(async function () {
-    this.signers = {} as Signers;
-
-    const signers = await ethers.getSigners();
-    this.signers.admin = signers[0];
-    this.signers.user = signers[1];
-
-    this.loadFixture = loadFixture;
+    [adminSigner, userSigner] = await ethers.getSigners();
   });
 
   describe("Admin Wallet", function () {
     before(async function () {
-      const { greeter } = await this.loadFixture(deployGreeterFixture);
-      this.greeter = greeter.connect(this.signers.admin);
+      const { greeter } = await loadFixture(deployGreeterFixture);
+      this.greeter = greeter.connect(adminSigner);
     });
 
     it("Should return the greeting", async function () {
@@ -27,7 +24,7 @@ describe("Contract Greeter", function () {
     });
 
     it("Should return the new greeting once it's changed", async function () {
-      const address = this.signers.admin.address;
+      const address = adminSigner.address;
       const message = "Bonjour, le monde!";
 
       // Should emit event
@@ -40,7 +37,7 @@ describe("Contract Greeter", function () {
     });
 
     it("Should change master greeting with event", async function () {
-      const address = this.signers.admin.address;
+      const address = adminSigner.address;
       const expected = "*Hello, master!*";
 
       // Should emit event
@@ -67,7 +64,7 @@ describe("Contract Greeter", function () {
 
       await expect(this.greeter.pause()) //
         .to.be.emit(this.greeter, "Paused")
-        .withArgs(this.signers.admin.address);
+        .withArgs(adminSigner.address);
     });
 
     it("Own can unpause contract", async function () {
@@ -75,22 +72,22 @@ describe("Contract Greeter", function () {
 
       await expect(this.greeter.unpause()) //
         .to.be.emit(this.greeter, "Unpaused")
-        .withArgs(this.signers.admin.address);
+        .withArgs(adminSigner.address);
     });
 
     it("Own can transfer Ownership", async function () {
       await this.greeter.unpause().catch(() => {}); // ignore error
 
-      expect(await this.greeter.owner()).to.be.equal(this.signers.admin.address);
+      expect(await this.greeter.owner()).to.be.equal(adminSigner.address);
 
       expect(await this.greeter.isOwner()).to.be.true;
 
       await expect(this.greeter.transferOwnership(ethers.ZeroAddress)) //
         .to.be.revertedWith("Ownable: new owner is the zero address");
 
-      await expect(this.greeter.transferOwnership(this.signers.user.address)) //
+      await expect(this.greeter.transferOwnership(userSigner.address)) //
         .to.be.emit(this.greeter, "OwnershipTransferred")
-        .withArgs(this.signers.admin.address, this.signers.user.address);
+        .withArgs(adminSigner.address, userSigner.address);
     });
 
     it("Call throwError", async function () {
@@ -100,8 +97,8 @@ describe("Contract Greeter", function () {
 
   describe("User Wallet", function () {
     before(async function () {
-      const { greeter } = await this.loadFixture(deployGreeterFixture);
-      this.greeter = greeter.connect(this.signers.user);
+      const { greeter } = await loadFixture(deployGreeterFixture);
+      this.greeter = greeter.connect(userSigner);
     });
 
     it("Should return the greeting", async function () {
@@ -109,7 +106,7 @@ describe("Contract Greeter", function () {
     });
 
     it("Should return the new greeting once it's changed", async function () {
-      const address = this.signers.user.address;
+      const address = userSigner.address;
       const message = "Bonjour, le monde!";
 
       // Should emit event
@@ -139,7 +136,7 @@ describe("Contract Greeter", function () {
     it("Should error when a regular wallet tries transfer Ownership", async function () {
       expect(await this.greeter.isOwner()).to.be.false;
 
-      await expect(this.greeter.transferOwnership(this.signers.user.address)) //
+      await expect(this.greeter.transferOwnership(userSigner.address)) //
         .to.be.revertedWith("Ownable: caller is not the owner");
     });
   });

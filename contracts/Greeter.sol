@@ -1,4 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
+
+// Obs: para fins de estudo foram adicionados as extensões Ownable e Pausable,
+// porém uma boa prática é utilizar o contrato prontos do OpenZeppelin, exemplo:
+// import {Pausable} from "@openzeppelin/contracts/security/Pausable.sol";
+// import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+
 pragma solidity >=0.8.4;
 
 import { console } from "hardhat/console.sol";
