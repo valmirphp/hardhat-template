@@ -9,6 +9,7 @@
     "named-parameters-mapping": "warn",
     "no-console": "off",
     "not-rely-on-time": "off",
+    "func-named-parameters": ["warn", 3],
     "prettier/prettier": [
       "error",
       {
