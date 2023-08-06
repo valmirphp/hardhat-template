@@ -9,6 +9,8 @@ coverage
 dist
 node_modules
 types
+.tmp
+.yarn
 
 # files
 *.env

@@ -40,9 +40,21 @@ jobs:
         run: "yarn typechain"
 
       - name: "Test the contracts and generate the coverage report"
-        run: "yarn coverage"
+        run: "yarn coverage:run"
+
+      - name: "Check the coverage threshold"
+        run: "yarn coverage:check"
 
       - name: "Add test summary"
         run: |
           echo "## Test results" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
+
+      - name: Hardhat Tasks
+        run: |
+          npx hardhat --network hardhat task:deployGreeter --greeting Hello
+          npx hardhat --network hardhat task:deployGreeter --greeting "Bonjour, le monde"
+
+      - name: Report Gas Usage
+        run: |
+          REPORT_GAS=true npx hardhat --network hardhat test
