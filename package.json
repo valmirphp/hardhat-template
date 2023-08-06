@@ -31,9 +31,13 @@
     "task:deployGreeter": "hardhat task:deployGreeter",
     "task:setGreeting": "hardhat task:setGreeting",
     "test": "hardhat test",
-    "typechain": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain"
+    "test:gas": "cross-env REPORT_GAS=true hardhat test",
+    "typechain": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain",
+    "envc:pwd": "env-enc set-pw",
+    "envc:set": "env-enc set"
   },
   "devDependencies": {
+    "@chainlink/env-enc": "^1.0.5",
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.1",
     "@nomicfoundation/hardhat-ethers": "^3.0.4",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.8",

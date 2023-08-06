@@ -76,6 +76,28 @@ Em seguida, prossiga com a instalação das dependências:
 $ yarn install
 ```
 
+### Configuração
+
+Além das variáveis de ambiente mencionadas acima, em caso de uso de uma rede `mainnet` recomenda-se a criação de um
+arquivo criptografado `.env.enc` com a chave privada da carteira que será usada para implantar os contratos
+inteligentes.
+
+Para isso iremos utilizar o pacote [@chainlink/env-enc](https://www.npmjs.com/package/@chainlink/env-enc)
+
+Ja deixamos os atalhos para os comandos no arquivo `package.json` para facilitar o uso.
+
+Para iniciar crie uma senha:
+
+```sh
+$ yarn envc:pwd
+```
+
+Na sequencia, execute o comando a baixo, e informe o nome da chave: `HW_PRIVATE_KEY`
+
+```sh
+$ yarn envc:set
+```
+
 ### Compilar
 
 Compile os contratos inteligentes com o Hardhat:
