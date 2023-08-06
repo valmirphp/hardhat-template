@@ -62,6 +62,33 @@ No entanto, para que isso funcione, você deve usar suas chaves secretas do GitH
 
 Você pode editar o script de Integração Contínua (CI) em [.github/workflows/ci.yml](.github/workflows/ci.yml).
 
+#### Workflow de CI
+
+O fluxo de trabalho de CI é executado em cada push e pull request para a branch `main`. Ele executa os seguintes passos:
+
+✅ Setup Node18x ✅ Lint (solhint + prettier + TS eslint) ✅ Typechain (compile os contratos e gere os tipos TS) ✅
+Testes unitários (mocha) ✅ Testes de cobertura (quando não atingir % de cobertura deseja o CI falha) ✅ Executa as
+tasks do hardhat ✅ Relatório de consumo de gás
+
+## IDEs
+
+Este modelo é independente de IDE, mas para obter a melhor experiência do usuário, deixamos algumas configurações para
+facilitar o uso com o VSCode e WebStorm.
+
+### Integração com VSCode
+
+Se você usar o VSCode, pode obter realce de sintaxe Solidity com a extensão
+[Hardhat extension](https://marketplace.visualstudio.com/items?itemName=NomicFoundation.hardhat-solidity).
+
+No diretório `.vscode`, você encontrará uma configuração de tarefa para executar o Hardhat.
+
+### Integração com WebStorm
+
+Se você optar por WebStorm, pode obter realce de sintaxe Solidity com o plugin
+[IntelliJ Solidity](https://plugins.jetbrains.com/plugin/9475-solidity).
+
+No diretório `.run`, você encontrará uma template de configuração dos testes `Mocha` para executar no webstorm.
+
 ## Uso
 
 ### Pré-requisitos
@@ -126,9 +153,22 @@ $ yarn test
 
 Execute a verificação de código (lint) no código Solidity:
 
+Veja mais sobre as regras de lint em [Solhint](https://protofire.github.io/solhint/docs/rules.html)
+
 ```sh
 $ yarn lint:sol
 ```
+
+**Plugins para IDEs:**
+
+- [VS Code](https://marketplace.visualstudio.com/items?itemName=JuanBlanco.solidity)
+- [JetBrains](https://plugins.jetbrains.com/plugin/10177-solidity-solhint)
+
+**Veja mais:**
+
+- [Regras de boas práticas](https://protofire.github.io/solhint/docs/rules.html#best-practise-rules)
+- [Regras de segurança](https://protofire.github.io/solhint/docs/rules.html#security-rules)
+- [Regras de estilo](https://protofire.github.io/solhint/docs/rules.html#style-guide-rules)
 
 ### Lint TypeScript
 
@@ -198,15 +238,6 @@ $ yarn hardhat verify --network sepolia 0xxxxx "Bonjour, le monde!"
 ```
 
 Onde `0xxxxx` é o endereço do contrato implantado, e `"Bonjour, le monde!"` é o argumento do construtor.
-
-## Dicas
-
-### Syntax Highlighting
-
-Se você usar o WebStorm, pode obter realce de sintaxe Solidity com o plugin
-[IntelliJ Solidity](https://plugins.jetbrains.com/plugin/9475-solidity). Se você usar o VSCode, pode obter realce de
-sintaxe Solidity com a extensão
-[hardhat-solidity](https://marketplace.visualstudio.com/items?itemName=NomicFoundation.hardhat-solidity).
 
 ## Using GitPod
 

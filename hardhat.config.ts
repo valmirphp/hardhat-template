@@ -36,6 +36,9 @@ const config: HardhatUserConfig = {
   },
   gasReporter: {
     currency: "USD",
+    token: "ETH",
+    gasPriceApi: "Etherscan",
+    gasPrice: 21,
     enabled: !!process.env.REPORT_GAS,
     excludeContracts: [],
     src: "./contracts",

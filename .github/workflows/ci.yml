@@ -50,7 +50,7 @@ jobs:
           echo "## Test results" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
 
-      - name: Tasks - deploy contracts
+      - name: Hardhat Tasks
         run: |
           npx hardhat --network hardhat task:deployGreeter --greeting Hello
           npx hardhat --network hardhat task:deployGreeter --greeting "Bonjour, le monde"
