@@ -7,8 +7,8 @@ import { resolve } from "path";
 
 import utils from "./hardhat.utils";
 import "./tasks/accounts";
-import "./tasks/greet";
-import "./tasks/taskDeploy";
+import "./tasks/deployGreeter";
+import "./tasks/setGreeting";
 
 const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
 dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) });
@@ -39,7 +39,6 @@ const config: HardhatUserConfig = {
     enabled: !!process.env.REPORT_GAS,
     excludeContracts: [],
     src: "./contracts",
-    noColors: true,
   },
   networks: {
     hardhat: {

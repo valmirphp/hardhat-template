@@ -151,7 +151,7 @@ $ yarn coverage
 Veja o consumo de gás por teste unitário e a média de gás por chamada de método:
 
 ```sh
-$ REPORT_GAS=true yarn test
+$ yarn test:gas
 ```
 
 ### Limpar
@@ -177,15 +177,15 @@ $ yarn deploy:contracts
 Implante uma nova instância do contrato Greeter por meio de uma tarefa:
 
 ```sh
-$ yarn task:deployGreeter --network ganache --greeting "Bonjour, le monde!"
+$ yarn task:deployGreeter --network sepolia --greeting "Bonjour, le monde!"
 ```
 
 #### Set Greeting
 
-Execute a tarefa `setGreeting` na rede Ganache:
+Execute a tarefa `setGreeting` na rede testnet sepolia:
 
 ```sh
-$ yarn task:setGreeting --network ganache --greeting "Bonjour, le monde!" --account 3
+$ yarn task:setGreeting --network sepolia --greeting "Bonjour, le monde!" --account 3
 ```
 
 ### Verificação de contrato
