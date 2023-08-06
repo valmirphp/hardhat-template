@@ -36,6 +36,7 @@ const config: HardhatUserConfig = {
     enabled: !!process.env.REPORT_GAS,
     excludeContracts: [],
     src: "./contracts",
+    noColors: true,
   },
   networks: {
     hardhat: {

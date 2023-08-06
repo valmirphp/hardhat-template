@@ -49,8 +49,8 @@ jobs:
 
       - name: Tasks - deploy contracts
         run: |
-          npx hardhat --network hardhat deploy:Greeter --greeting Hello
-          npx hardhat --network hardhat deploy:Greeter --greeting "Bonjour, le monde"
+          npx hardhat --network hardhat task:deployGreeter --greeting Hello
+          npx hardhat --network hardhat task:deployGreeter --greeting "Bonjour, le monde"
 
       - name: Report Gas Usage
         run: |
