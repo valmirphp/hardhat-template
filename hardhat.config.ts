@@ -3,10 +3,9 @@ import "@nomicfoundation/hardhat-toolbox";
 import { config as dotenvConfig } from "dotenv";
 import "hardhat-deploy";
 import type { HardhatUserConfig } from "hardhat/config";
-import type { NetworkUserConfig } from "hardhat/types";
-import { HardhatNetworkAccountsUserConfig } from "hardhat/types/config";
 import { resolve } from "path";
 
+import utils from "./hardhat.utils";
 import "./tasks/accounts";
 import "./tasks/greet";
 import "./tasks/taskDeploy";
@@ -14,103 +13,6 @@ import "./tasks/taskDeploy";
 const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
 dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) });
 envEnc.config({ path: "./.env.enc" });
-
-const chainIds = {
-  "arbitrum-mainnet": 42161,
-  avalanche: 43114,
-  bsc: 56,
-  ganache: 1337,
-  hardhat: 31337,
-  mainnet: 1,
-  "optimism-mainnet": 10,
-  "polygon-mainnet": 137,
-  "polygon-mumbai": 80001,
-  sepolia: 11155111,
-};
-
-function getMnemonic(): string {
-  const mnemonic: string = process.env.MNEMONIC || "";
-  if (mnemonic.split(" ").length < 12) {
-    throw new Error("Please set your MNEMONIC in a .env file");
-  }
-
-  return mnemonic;
-}
-
-function getInfuraApiKey(): string {
-  const infuraApiKey: string = process.env.INFURA_API_KEY || "";
-  if (infuraApiKey.length === 0) {
-    throw new Error("Please set your INFURA_API_KEY in a .env file");
-  }
-
-  return infuraApiKey;
-}
-
-function getAlchemyUri(mainnet: boolean): string {
-  const key = mainnet ? "ALCHEMY_MAINNET_URI" : "ALCHEMY_TESTNET_URI";
-  const alchemyUri = process.env[key] || "";
-
-  if (!alchemyUri.includes("alchemy.com")) {
-    throw new Error(`Please set your ${key} in a .env file`);
-  }
-
-  return alchemyUri;
-}
-
-function getAccountConfig(chain: keyof typeof chainIds): HardhatNetworkAccountsUserConfig {
-  const requirePrivateKey: Array<keyof typeof chainIds> = [
-    "bsc",
-    "ganache",
-    "mainnet",
-    "polygon-mainnet",
-    "polygon-mumbai",
-    "sepolia",
-  ];
-
-  if (!requirePrivateKey.includes(chain)) {
-    return {
-      count: 10,
-      mnemonic: getMnemonic(),
-      path: "m/44'/60'/0'/0",
-    };
-  }
-
-  const privateKey = process.env.HW_PRIVATE_KEY || "";
-  if (!privateKey) {
-    throw new Error("Please set your HW_PRIVATE_KEY in a .env file");
-  }
-
-  return [privateKey] as HardhatNetworkAccountsUserConfig; // fix: Invalid account: Expected string, received object
-}
-
-function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
-  let jsonRpcUrl: string;
-
-  switch (chain) {
-    case "avalanche":
-      jsonRpcUrl = "https://api.avax.network/ext/bc/C/rpc";
-      break;
-    case "bsc":
-      jsonRpcUrl = "https://bsc-dataseed1.binance.org";
-      break;
-    case "sepolia":
-    case "polygon-mumbai":
-      jsonRpcUrl = getAlchemyUri(false);
-      break;
-    case "mainnet":
-    case "polygon-mainnet":
-      jsonRpcUrl = getAlchemyUri(true);
-      break;
-    default:
-      jsonRpcUrl = "https://" + chain + ".infura.io/v3/" + getInfuraApiKey();
-  }
-
-  return {
-    accounts: getAccountConfig(chain),
-    chainId: chainIds[chain],
-    url: jsonRpcUrl,
-  };
-}
 
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
@@ -131,32 +33,32 @@ const config: HardhatUserConfig = {
   },
   gasReporter: {
     currency: "USD",
-    enabled: process.env.REPORT_GAS ? true : false,
+    enabled: !!process.env.REPORT_GAS,
     excludeContracts: [],
     src: "./contracts",
   },
   networks: {
     hardhat: {
       accounts: {
-        mnemonic: getMnemonic(),
+        mnemonic: utils.getMnemonic(),
       },
-      chainId: chainIds.hardhat,
+      chainId: utils.chainIds.hardhat,
     },
     ganache: {
       accounts: {
-        mnemonic: getMnemonic(),
+        mnemonic: utils.getMnemonic(),
       },
-      chainId: chainIds.ganache,
+      chainId: utils.chainIds.ganache,
       url: "http://127.0.0.1:7545",
     },
-    arbitrum: getChainConfig("arbitrum-mainnet"),
-    avalanche: getChainConfig("avalanche"),
-    bsc: getChainConfig("bsc"),
-    mainnet: getChainConfig("mainnet"),
-    optimism: getChainConfig("optimism-mainnet"),
-    "polygon-mainnet": getChainConfig("polygon-mainnet"),
-    "polygon-mumbai": getChainConfig("polygon-mumbai"),
-    sepolia: getChainConfig("sepolia"),
+    arbitrum: utils.getChainConfig("arbitrum-mainnet"),
+    avalanche: utils.getChainConfig("avalanche"),
+    bsc: utils.getChainConfig("bsc"),
+    mainnet: utils.getChainConfig("mainnet"),
+    optimism: utils.getChainConfig("optimism-mainnet"),
+    "polygon-mainnet": utils.getChainConfig("polygon-mainnet"),
+    "polygon-mumbai": utils.getChainConfig("polygon-mumbai"),
+    sepolia: utils.getChainConfig("sepolia"),
   },
   paths: {
     artifacts: "./artifacts",
