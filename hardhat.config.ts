@@ -23,6 +23,9 @@ if (!infuraApiKey) {
   throw new Error("Please set your INFURA_API_KEY in a .env file");
 }
 
+const alchemyMainUri: string = process.env.ALCHEMY_MAIN_URI || "";
+const alchemyTestUri: string = process.env.ALCHEMY_TEST_URI || "";
+
 const chainIds = {
   "arbitrum-mainnet": 42161,
   avalanche: 43114,
@@ -45,6 +48,14 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
     case "bsc":
       jsonRpcUrl = "https://bsc-dataseed1.binance.org";
       break;
+    case "polygon-mumbai":
+      jsonRpcUrl = alchemyTestUri;
+      break;
+    case "mainnet":
+    case "polygon-mainnet":
+      jsonRpcUrl = alchemyMainUri;
+      break;
+    case "sepolia":
     default:
       jsonRpcUrl = "https://" + chain + ".infura.io/v3/" + infuraApiKey;
   }

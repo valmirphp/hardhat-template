@@ -1,21 +1,15 @@
 # Hardhat Template
 
-[![Open in Gitpod][gitpod-badge]][gitpod] [![Github Actions][gha-badge]][gha] [![Hardhat][hardhat-badge]][hardhat] [![License: MIT][license-badge]][license]
+[![Open in Gitpod][gitpod-badge]][gitpod] [![Github Actions][gha-badge]][gha] [![Hardhat][hardhat-badge]][hardhat]
+[![License: MIT][license-badge]][license]
 
 [gitpod]: https://gitpod.io/#https://github.com/valmirphp/hardhat-template
-
 [gitpod-badge]: https://img.shields.io/badge/Gitpod-Open%20in%20Gitpod-FFB45B?logo=gitpod
-
 [gha]: https://github.com/valmirphp/hardhat-template/actions
-
 [gha-badge]: https://github.com/valmirphp/hardhat-template/actions/workflows/ci.yml/badge.svg
-
 [hardhat]: https://hardhat.org/
-
 [hardhat-badge]: https://img.shields.io/badge/Built%20with-Hardhat-FFDB1C.svg
-
 [license]: https://opensource.org/licenses/MIT
-
 [license-badge]: https://img.shields.io/badge/License-MIT-blue.svg
 
 Um modelo baseado em Hardhat para desenvolvimento de contratos inteligentes em Solidity, com configurações necessárias.
@@ -31,14 +25,13 @@ Um modelo baseado em Hardhat para desenvolvimento de contratos inteligentes em S
 
 ## Getting Started
 
-Clique no botão [`Use este modelo`](https://github.com/valmirphp/hardhat-template/generate) no topo da página para
-criar um novo repositório com este repositório como estado inicial.
+Clique no botão [`Use este modelo`](https://github.com/valmirphp/hardhat-template/generate) no topo da página para criar
+um novo repositório com este repositório como estado inicial.
 
 ## Recursos
 
 Este modelo baseia-se nos frameworks e bibliotecas mencionados acima, portanto, para detalhes sobre suas características
-específicas,
-consulte suas respectivas documentações.
+específicas, consulte suas respectivas documentações.
 
 Por exemplo, para o Hardhat, você pode consultar o [Tutorial Hardhat](https://hardhat.org/tutorial) e a
 [Documentação Hardhat](https://hardhat.org/docs). Você pode estar particularmente interessado em ler a seção de
@@ -152,7 +145,7 @@ $ yarn clean
 Implante os contratos na rede Hardhat:
 
 ```sh
-$ yarn deploy:contracts"
+$ yarn deploy:contracts
 ```
 
 ### Tasks
@@ -173,14 +166,25 @@ Execute a tarefa `setGreeting` na rede Ganache:
 $ yarn task:setGreeting --network ganache --greeting "Bonjour, le monde!" --account 3
 ```
 
+### Verificação de contrato
+
+Faça a verificação de um contrato implantado na rede sepolia, isso é útil para quando desejar registrar o código fonte
+do contrato na blockchain:
+
+```sh
+$ yarn hardhat verify --network sepolia 0xxxxx "Bonjour, le monde!"
+```
+
+Onde `0xxxxx` é o endereço do contrato implantado, e `"Bonjour, le monde!"` é o argumento do construtor.
+
 ## Dicas
 
 ### Syntax Highlighting
 
-Se você usar o WebStorm, pode obter realce de sintaxe Solidity com o
-plugin [IntelliJ Solidity](https://plugins.jetbrains.com/plugin/9475-solidity).
-Se você usar o VSCode, pode obter realce de sintaxe Solidity com a
-extensão [hardhat-solidity](https://marketplace.visualstudio.com/items?itemName=NomicFoundation.hardhat-solidity).
+Se você usar o WebStorm, pode obter realce de sintaxe Solidity com o plugin
+[IntelliJ Solidity](https://plugins.jetbrains.com/plugin/9475-solidity). Se você usar o VSCode, pode obter realce de
+sintaxe Solidity com a extensão
+[hardhat-solidity](https://marketplace.visualstudio.com/items?itemName=NomicFoundation.hardhat-solidity).
 
 ## Using GitPod
 
