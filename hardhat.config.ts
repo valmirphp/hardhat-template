@@ -12,7 +12,10 @@ import "./tasks/taskDeploy";
 
 const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
 dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) });
-envEnc.config({ path: "./.env.enc" });
+
+if (process.env.NODE_ENV !== "test") {
+  envEnc.config({ path: "./.env.enc" });
+}
 
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
