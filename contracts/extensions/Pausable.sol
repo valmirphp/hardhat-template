@@ -36,6 +36,7 @@ abstract contract Pausable {
      * - The contract must not be paused.
      */
     modifier whenNotPaused() {
+        // solhint-disable-next-line custom-errors
         require(!paused(), "Pausable: paused");
         _;
     }
@@ -48,6 +49,7 @@ abstract contract Pausable {
      * - The contract must be paused.
      */
     modifier whenPaused() {
+        // solhint-disable-next-line custom-errors
         require(paused(), "Pausable: not paused");
         _;
     }

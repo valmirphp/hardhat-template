@@ -25,6 +25,7 @@ abstract contract Ownable {
      * @dev Throws if called by any account other than the owner.
      */
     modifier onlyOwner() {
+        // solhint-disable-next-line custom-errors
         require(isOwner(), "Ownable: caller is not the owner");
         _;
     }
@@ -48,6 +49,7 @@ abstract contract Ownable {
      * @dev Transfers ownership of the contract to a new account (`newOwner`).
      */
     function _transferOwnership(address newOwner) internal {
+        // solhint-disable-next-line custom-errors
         require(newOwner != address(0), "Ownable: new owner is the zero address");
         emit OwnershipTransferred(_owner, newOwner);
         _owner = newOwner;

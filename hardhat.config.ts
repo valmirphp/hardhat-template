@@ -6,6 +6,7 @@ import type { HardhatUserConfig } from "hardhat/config";
 import { resolve } from "path";
 
 import utils from "./hardhat.utils";
+import "./hre/helpers";
 import "./tasks/accounts";
 import "./tasks/deployGreeter";
 import "./tasks/setGreeting";
