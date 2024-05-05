@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.4;
 
+error IsPaused();
+error IsNotPaused();
+
 abstract contract Pausable {
     /**
      * @dev Emitted when the pause is triggered by `account`.
@@ -36,8 +39,7 @@ abstract contract Pausable {
      * - The contract must not be paused.
      */
     modifier whenNotPaused() {
-        // solhint-disable-next-line custom-errors
-        require(!paused(), "Pausable: paused");
+        if (paused()) revert IsPaused(); // Pausable: paused
         _;
     }
 
@@ -49,8 +51,7 @@ abstract contract Pausable {
      * - The contract must be paused.
      */
     modifier whenPaused() {
-        // solhint-disable-next-line custom-errors
-        require(paused(), "Pausable: not paused");
+        if (!paused()) revert IsNotPaused(); // Pausable: not paused
         _;
     }
 

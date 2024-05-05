@@ -56,10 +56,10 @@ describe("Contract Greeter", function () {
       await greeter.pause().catch(() => {}); // ignore error
 
       await expect(greeter.setGreeting("Hello!")) //
-        .to.revertedWith("Pausable: paused");
+        .to.revertedWithCustomError(greeter, "IsPaused");
 
       await expect(greeter.setGreetingMaster("Hello, master!")) //
-        .to.revertedWith("Pausable: paused");
+        .to.revertedWithCustomError(greeter, "IsPaused");
     });
 
     it("Own can pause contract", async function () {
@@ -86,7 +86,7 @@ describe("Contract Greeter", function () {
       expect(await greeter.isOwner()).to.be.true;
 
       await expect(greeter.transferOwnership(ethers.ZeroAddress)) //
-        .to.be.revertedWith("Ownable: new owner is the zero address");
+        .to.be.revertedWithCustomError(greeter, "OwnerZeroAddress");
 
       await expect(greeter.transferOwnership(userSigner.address)) //
         .to.be.emit(greeter, "OwnershipTransferred")
@@ -125,24 +125,24 @@ describe("Contract Greeter", function () {
 
     it("Should error when a regular wallet tries to change the master greeting", async function () {
       await expect(greeter.setGreetingMaster("Buen día")) //
-        .to.be.revertedWith("Ownable: caller is not the owner");
+        .to.be.revertedWithCustomError(greeter, "Unauthorized");
     });
 
     it("Should error when a regular wallet tries to pause", async function () {
       await expect(greeter.pause()) //
-        .to.be.revertedWith("Ownable: caller is not the owner");
+        .to.be.revertedWithCustomError(greeter, "Unauthorized");
     });
 
     it("Should error when a regular wallet tries to unpause", async function () {
       await expect(greeter.unpause()) //
-        .to.be.revertedWith("Ownable: caller is not the owner");
+        .to.be.revertedWithCustomError(greeter, "Unauthorized");
     });
 
     it("Should error when a regular wallet tries transfer Ownership", async function () {
       expect(await greeter.isOwner()).to.be.false;
 
       await expect(greeter.transferOwnership(userSigner.address)) //
-        .to.be.revertedWith("Ownable: caller is not the owner");
+        .to.be.revertedWithCustomError(greeter, "Unauthorized");
     });
   });
 });
