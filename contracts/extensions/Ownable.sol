@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.4;
 
+error Unauthorized();
+error OwnerZeroAddress();
+
 abstract contract Ownable {
     address private _owner;
 
@@ -25,7 +28,7 @@ abstract contract Ownable {
      * @dev Throws if called by any account other than the owner.
      */
     modifier onlyOwner() {
-        require(isOwner(), "Ownable: caller is not the owner");
+        if (!isOwner()) revert Unauthorized(); // "Ownable: caller is not the owner"
         _;
     }
 
@@ -48,7 +51,8 @@ abstract contract Ownable {
      * @dev Transfers ownership of the contract to a new account (`newOwner`).
      */
     function _transferOwnership(address newOwner) internal {
-        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        if (newOwner == address(0)) revert OwnerZeroAddress(); // "Ownable: new owner is the zero address"
+
         emit OwnershipTransferred(_owner, newOwner);
         _owner = newOwner;
     }
