@@ -1,19 +1,22 @@
-# directories
-.coverage_artifacts
-.coverage_cache
-.coverage_contracts
-artifacts
-build
-cache
-coverage
-dist
-node_modules
-types
-deployments
+# Hardhat files
+/cache
+/artifacts
+
+# TypeChain files
+/typechain
+/typechain-types
+
+# solidity-coverage files
+/coverage
+/coverage.json
+
+# Other directories
+/node_modules
+/deployments
 
 # files
-*.env
 *.log
+.env
 .env.enc
 .DS_Store
 .pnp.*
@@ -31,3 +34,6 @@ package-lock.json
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+
+# Hardhat Ignition default folder for deployments against a local node
+ignition/deployments/chain-31337

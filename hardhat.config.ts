@@ -1,14 +1,13 @@
-import * as envEnc from "@chainlink/env-enc";
+import { resolve } from "node:path";
 import "@nomicfoundation/hardhat-toolbox";
-import { config as dotenvConfig } from "dotenv";
-import "hardhat-deploy";
+import "@nomicfoundation/hardhat-ignition-ethers";
 import type { HardhatUserConfig } from "hardhat/config";
-import { resolve } from "path";
+import { config as dotenvConfig } from "dotenv";
+import * as envEnc from "@chainlink/env-enc";
 
 import utils from "./hardhat.utils";
 import "./hre/helpers";
 import "./tasks/accounts";
-import "./tasks/deployGreeter";
 import "./tasks/setGreeting";
 
 const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
@@ -19,31 +18,30 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 const config: HardhatUserConfig = {
+  solidity: "0.8.24",
   defaultNetwork: "hardhat",
-  namedAccounts: {
-    deployer: 0,
-  },
-  etherscan: {
-    apiKey: {
-      arbitrumOne: process.env.ARBISCAN_API_KEY || "",
-      avalanche: process.env.SNOWTRACE_API_KEY || "",
-      bsc: process.env.BSCSCAN_API_KEY || "",
-      mainnet: process.env.ETHERSCAN_API_KEY || "",
-      optimisticEthereum: process.env.OPTIMISM_API_KEY || "",
-      polygon: process.env.POLYGONSCAN_API_KEY || "",
-      polygonMumbai: process.env.POLYGONSCAN_API_KEY || "",
-      sepolia: process.env.ETHERSCAN_API_KEY || "",
-    },
-  },
-  gasReporter: {
-    currency: "USD",
-    token: "ETH",
-    gasPriceApi: "Etherscan",
-    gasPrice: 21,
-    enabled: !!process.env.REPORT_GAS,
-    excludeContracts: [],
-    src: "./contracts",
-  },
+  // TODO revisar
+  // etherscan: {
+  //   apiKey: {
+  //     arbitrumOne: process.env.ARBISCAN_API_KEY || "",
+  //     avalanche: process.env.SNOWTRACE_API_KEY || "",
+  //     bsc: process.env.BSCSCAN_API_KEY || "",
+  //     mainnet: process.env.ETHERSCAN_API_KEY || "",
+  //     optimisticEthereum: process.env.OPTIMISM_API_KEY || "",
+  //     polygon: process.env.POLYGONSCAN_API_KEY || "",
+  //     polygonMumbai: process.env.POLYGONSCAN_API_KEY || "",
+  //     sepolia: process.env.ETHERSCAN_API_KEY || "",
+  //   },
+  // },
+  // gasReporter: {
+  //   currency: "USD",
+  //   token: "ETH",
+  //   gasPriceApi: "Etherscan",
+  //   gasPrice: 21,
+  //   enabled: !!process.env.REPORT_GAS,
+  //   excludeContracts: [],
+  //   src: "./contracts",
+  // },
   networks: {
     hardhat: {
       accounts: {
@@ -67,30 +65,17 @@ const config: HardhatUserConfig = {
     "polygon-mumbai": utils.getChainConfig("polygon-mumbai"),
     sepolia: utils.getChainConfig("sepolia"),
   },
+  // TODO mover caminhos para storage
   paths: {
     artifacts: "./artifacts",
-    cache: "./cache",
+    ignition: "./ignition",
     sources: "./contracts",
+    cache: "./cache",
     tests: "./test",
-  },
-  solidity: {
-    version: "0.8.17",
-    settings: {
-      metadata: {
-        // Not including the metadata hash
-        // https://github.com/paulrberg/hardhat-template/issues/31
-        bytecodeHash: "none",
-      },
-      // Disable the optimizer when debugging
-      // https://hardhat.org/hardhat-network/#solidity-optimizer-support
-      optimizer: {
-        enabled: true,
-        runs: 800,
-      },
-    },
+    root: "./",
   },
   typechain: {
-    outDir: "types",
+    outDir: "./typechain",
     target: "ethers-v6",
   },
 };

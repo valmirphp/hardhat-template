@@ -1,5 +1,3 @@
-import "@nomicfoundation/hardhat-toolbox";
-import "hardhat-deploy";
 import type { NetworkUserConfig } from "hardhat/types";
 import { HardhatNetworkAccountsUserConfig } from "hardhat/types/config";
 
@@ -16,6 +14,7 @@ const chainIds = {
   sepolia: 11155111,
 };
 
+// TODO refatorar para usar VARS do HH
 function getMnemonic(): string {
   const mnemonic: string = process.env.MNEMONIC || "";
   if (mnemonic.split(" ").length < 12) {
@@ -25,10 +24,12 @@ function getMnemonic(): string {
   return mnemonic;
 }
 
+// TODO refatorar para usar VARS do HH
 function getHwPrivateKey(): string | null {
   return process.env.HW_PRIVATE_KEY || null;
 }
 
+// TODO refatorar para usar VARS do HH
 function getInfuraApiKey(): string {
   const infuraApiKey: string = process.env.INFURA_API_KEY || "";
   if (infuraApiKey.length === 0) {
@@ -38,6 +39,7 @@ function getInfuraApiKey(): string {
   return infuraApiKey;
 }
 
+// TODO refatorar para usar VARS do HH
 function getAlchemyUri(mainnet: boolean): string {
   const key = mainnet ? "ALCHEMY_MAINNET_URI" : "ALCHEMY_TESTNET_URI";
   const alchemyUri = process.env[key] || "";
