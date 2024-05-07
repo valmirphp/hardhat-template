@@ -1,6 +1,5 @@
-import { ethers } from "hardhat";
-
-import type { Greeter } from "../../types/Greeter";
+import { ethers } from 'hardhat';
+import type { Greeter } from '@app/typechain';
 
 export type GreeterFixture = {
   greeter: Greeter;
@@ -14,10 +13,13 @@ export async function deployGreeterFixture(): Promise<GreeterFixture> {
   const signers = await ethers.getSigners();
   const admin = signers[0];
 
-  const greeting = "Hello, world!";
-  const greeterFactory = await ethers.getContractFactory("Greeter");
+  const greeting = 'Hello, world!';
+  const greeterFactory = await ethers.getContractFactory('Greeter');
   const greeter = await greeterFactory.connect(admin).deploy(greeting);
   await greeter.waitForDeployment();
 
-  return { greeter, greeterAddress: await greeter.getAddress() };
+  return {
+    greeter: greeter as unknown as Greeter,
+    greeterAddress: await greeter.getAddress(),
+  };
 }

@@ -1,7 +1,4 @@
-name: "CI"
-
-env:
-  DOTENV_CONFIG_PATH: "./.env.example"
+name: 'CI'
 
 on:
   workflow_dispatch:
@@ -12,49 +9,67 @@ on:
 
 jobs:
   ci:
-    runs-on: "ubuntu-latest"
+    runs-on: ubuntu-latest
+    name: CI Hardhat
     steps:
-      - name: "Check out the repo"
-        uses: "actions/checkout@v3"
+      - name: '📥 Checkout repository'
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: "Install Node.js"
-        uses: "actions/setup-node@v3"
+      - name: '🔌 Enable Corepack before setting up Node'
+        run: corepack enable
+
+      - name: '🔧 Setup NodeJs'
+        uses: actions/setup-node@v4
         with:
-          cache: "yarn"
-          node-version: "18"
+          node-version: '20'
+          cache: 'yarn'
 
-      - name: "Yarn install"
-        run: "yarn install --immutable"
+      - name: '📦 Yarn install'
+        run: yarn install
 
-      - name: "Lint the code"
-        run: "yarn lint"
+      - name: '🔐 Copy .env.example to .env'
+        run: cp .env.example .env
 
-      - name: "Add lint summary"
+      - name: '🔍 Lint Solidity files'
+        run: yarn lint:sol
+
+      - name: '🔍 Lint TypeScript files'
+        run: yarn lint:ts
+
+      - name: '🔍 Prettier check'
+        run: yarn prettier:check
+
+      - name: '📝 Add lint summary'
         run: |
           echo "## Lint results" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
 
-      - name: "Compile the contracts and generate the TypeChain bindings"
-        run: "yarn typechain"
+      - name: '🔨 Compile the contracts and generate the TypeChain bindings'
+        run: yarn typechain
 
-      - name: "Test the contracts and generate the coverage report"
-        run: "yarn coverage:run"
+      - name: '🧪 Test the contracts and generate the coverage report'
+        run: yarn coverage:run
 
-      - name: "Check the coverage threshold"
-        run: "yarn coverage:check"
+      - name: '🔎 Check the coverage threshold'
+        run: yarn coverage:check
 
-      - name: "Add test summary"
+      - name: '📝 Add test summary'
         run: |
           echo "## Test results" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
 
-      - name: Hardhat Tasks
+      - name: '🦺 Hardhat Tasks'
         run: |
-          npx hardhat --network hardhat task:deployGreeter --greeting Hello
-          npx hardhat --network hardhat task:deployGreeter --greeting "Bonjour, le monde"
+          yarn hardhat task:setGreeting --greeting "Bonjour, le monde" --account 1
 
-      - name: Report Gas Usage
+      - name: '📊 Report Gas Usage'
         run: |
-          REPORT_GAS=true npx hardhat --network hardhat test
+          REPORT_GAS=true yarn test:gas
+
+      - name: '📝 Add gas report to summary'
+        run: |
+          REPORT_GAS=true yarn test:gas | sed 's/\x1b\[[0-9;]*m//g' > gas_report.txt
+          node .github/scripts/report-gas.js      
+          cat gas_report.md >> $GITHUB_STEP_SUMMARY

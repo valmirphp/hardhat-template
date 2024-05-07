@@ -2,6 +2,14 @@
   "extends": "solhint:recommended",
   "plugins": ["prettier"],
   "rules": {
+    "avoid-tx-origin": "error",
+    "explicit-types": "error",
+    "imports-on-top": "error",
+    "no-global-import": "error",
+    "no-unused-vars": "error",
+    "quotes": "error",
+    "use-forbidden-name": "error",
+    "visibility-modifier-order": "error",
     "code-complexity": ["error", 8],
     "reason-string": ["warn", { "maxLength": 40 }],
     "compiler-version": ["error", ">=0.8.4"],
@@ -10,7 +18,6 @@
     "named-parameters-mapping": "warn",
     "no-console": "off",
     "not-rely-on-time": "off",
-    "func-named-parameters": ["warn", 3],
     "prettier/prettier": [
       "error",
       {

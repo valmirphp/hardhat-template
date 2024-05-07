@@ -14,9 +14,16 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2020"
+    "skipLibCheck": true,
+    "target": "es2020",
+    "paths": {
+      "@app/typechain": ["storage/typechain"],
+      "@app/typechain/*": ["storage/typechain/*"],
+      "@app/ignition": ["ignition/modules"],
+      "@app/ignition/*": ["ignition/modules/*"]
+    }
   },
   "exclude": ["node_modules"],
   "files": ["./hardhat.config.ts", "./hardhat.utils.ts"],
-  "include": ["src/**/*", "tasks/**/*", "test/**/*", "hre/*", "deploy/**/*", "types/"]
+  "include": ["src/**/*", "tasks/**/*", "ignition/**/*", "test/**/*", "hre/*", "deploy/**/*", "typechain/"]
 }
