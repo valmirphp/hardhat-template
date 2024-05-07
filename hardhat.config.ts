@@ -1,6 +1,7 @@
 import "tsconfig-paths/register";
 import "@nomicfoundation/hardhat-toolbox";
 import "@nomicfoundation/hardhat-ignition-ethers";
+import "@nomiclabs/hardhat-solhint";
 import type { HardhatUserConfig } from "hardhat/config";
 import { config as dotenvConfig } from "dotenv";
 import { config as envEncConfig } from "@chainlink/env-enc";
