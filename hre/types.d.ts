@@ -1,7 +1,7 @@
-import "hardhat/types";
-import type { Greeter } from "@app/typechain";
+import 'hardhat/types';
+import type { Greeter } from '@app/typechain';
 
-declare module "hardhat/types" {
+declare module 'hardhat/types' {
   interface HardhatRuntimeEnvironment {
     helpers: {
       getGreeter: () => Promise<Greeter>;

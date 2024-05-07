@@ -1,7 +1,7 @@
-name: "CI"
+name: 'CI'
 
 env:
-  DOTENV_CONFIG_PATH: "./.env.example"
+  DOTENV_CONFIG_PATH: './.env.example'
 
 on:
   workflow_dispatch:
@@ -12,40 +12,40 @@ on:
 
 jobs:
   ci:
-    runs-on: "ubuntu-latest"
+    runs-on: 'ubuntu-latest'
     steps:
-      - name: "Check out the repo"
-        uses: "actions/checkout@v3"
+      - name: 'Check out the repo'
+        uses: 'actions/checkout@v3'
         with:
           fetch-depth: 0
 
-      - name: "Install Node.js"
-        uses: "actions/setup-node@v3"
+      - name: 'Install Node.js'
+        uses: 'actions/setup-node@v3'
         with:
-          cache: "yarn"
-          node-version: "18"
+          cache: 'yarn'
+          node-version: '18'
 
-      - name: "Yarn install"
-        run: "yarn install --immutable"
+      - name: 'Yarn install'
+        run: 'yarn install --immutable'
 
-      - name: "Lint the code"
-        run: "yarn lint"
+      - name: 'Lint the code'
+        run: 'yarn lint'
 
-      - name: "Add lint summary"
+      - name: 'Add lint summary'
         run: |
           echo "## Lint results" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
 
-      - name: "Compile the contracts and generate the TypeChain bindings"
-        run: "yarn typechain"
+      - name: 'Compile the contracts and generate the TypeChain bindings'
+        run: 'yarn typechain'
 
-      - name: "Test the contracts and generate the coverage report"
-        run: "yarn coverage:run"
+      - name: 'Test the contracts and generate the coverage report'
+        run: 'yarn coverage:run'
 
-      - name: "Check the coverage threshold"
-        run: "yarn coverage:check"
+      - name: 'Check the coverage threshold'
+        run: 'yarn coverage:check'
 
-      - name: "Add test summary"
+      - name: 'Add test summary'
         run: |
           echo "## Test results" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY

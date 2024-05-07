@@ -7,9 +7,9 @@
 
 pragma solidity >=0.8.4;
 
-import { console } from "hardhat/console.sol";
-import { Ownable } from "./extensions/Ownable.sol";
-import { Pausable } from "./extensions/Pausable.sol";
+import { console } from 'hardhat/console.sol';
+import { Ownable } from './extensions/Ownable.sol';
+import { Pausable } from './extensions/Pausable.sol';
 
 error GreeterError();
 
@@ -19,7 +19,7 @@ contract Greeter is Ownable, Pausable {
     event Greeted(address indexed sender, string greeting, bool isMaster);
 
     constructor(string memory _greeting) {
-        console.log("Deploying a Greeter with greeting: %s", _greeting);
+        console.log('Deploying a Greeter with greeting: %s', _greeting);
         greeting = _greeting;
     }
 
@@ -34,7 +34,7 @@ contract Greeter is Ownable, Pausable {
     }
 
     function setGreetingMaster(string memory _greeting) public whenNotPaused onlyOwner {
-        string memory newGreeting = string(abi.encodePacked("*", _greeting, "*"));
+        string memory newGreeting = string(abi.encodePacked('*', _greeting, '*'));
         console.log("Changing greeting from '%s' to '%s'", greeting, newGreeting);
         greeting = newGreeting;
         emit Greeted(msg.sender, newGreeting, true);
