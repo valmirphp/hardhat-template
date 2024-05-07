@@ -13,6 +13,7 @@ overrides:
       compiler: '0.8.24'
       parser: 'solidity-parse'
       tabWidth: 4
+      singleQuote: false
   - files: '*.ts'
     options:
       parser: 'typescript'
