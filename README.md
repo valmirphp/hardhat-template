@@ -104,8 +104,7 @@ Este template vem com configurações recomendas nos seguintes arquivos:
 
 ```text
 ├── .editorconfig
-├── .eslintignore
-├── .eslintrc.yml
+├── .eslintrc.js
 ├── .gitignore
 ├── .gitpod.yml
 ├── .mocharc.json
@@ -116,7 +115,6 @@ Este template vem com configurações recomendas nos seguintes arquivos:
 ├── .solhintignore
 ├── .yarnrc.yml
 ├── tsconfig.json
-├── hardhat.utils.ts
 └── hardhat.config.ts
 ```
 
@@ -138,7 +136,7 @@ O fluxo de trabalho de CI é executado em cada push e pull request para a branch
 - ✅ Typechain (compile os contratos e gere os tipos TS)
 - ✅ Testes unitários (mocha)
 - ✅ Testes de cobertura (quando não atingir % de cobertura deseja o CI falha)
-- ✅ Executa as tasks do hardhat
+- ✅ Executa as tasks do Hardhat
 - ✅ Relatório de consumo de gás
 
 ## IDEs
@@ -286,7 +284,7 @@ $ yarn clean
 Implante uma nova instância do contrato Greeter por meio de uma tarefa:
 
 ```sh
-$ yarn task:deployGreeter --network sepolia --greeting "Bonjour, le monde!"
+$ yarn hardhat ignition deploy ./ignition/modules/Greeter.ts --network sepolia
 ```
 
 #### Set Greeting
@@ -294,7 +292,7 @@ $ yarn task:deployGreeter --network sepolia --greeting "Bonjour, le monde!"
 Execute a tarefa `setGreeting` na rede testnet sepolia:
 
 ```sh
-$ yarn task:setGreeting --network sepolia --greeting "Bonjour, le monde!" --account 3
+$ yarn task:setGreeting --greeting "Bonjour, le monde!" --account 3 --network sepolia
 ```
 
 ## Deploy
@@ -306,7 +304,7 @@ $ yarn task:setGreeting --network sepolia --greeting "Bonjour, le monde!" --acco
 Implante os contratos na rede Hardhat:
 
 ```sh
-$ yarn hardhat ignition deploy ./ignition/modules/Apollo.ts --network sepolia --reset
+$ yarn hardhat ignition deploy ./ignition/modules/Greeter.ts --network sepolia --reset
 ```
 
 ### Verificação de contrato
@@ -317,10 +315,8 @@ Faça a verificação de um contrato implantado na rede sepolia, isso é útil p
 do contrato na blockchain:
 
 ```sh
-$ npx hardhat ignition verify ./ignition/modules/Apollo.ts --network sepolia
+$ yarn hardhat ignition verify ./ignition/modules/Greeter.ts --network sepolia
 ```
-
-Onde `0xxxxx` é o endereço do contrato implantado, e `"Bonjour, le monde!"` é o argumento do construtor.
 
 ## Using GitPod
 

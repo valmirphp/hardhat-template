@@ -67,3 +67,9 @@ jobs:
       - name: '📊 Report Gas Usage'
         run: |
           REPORT_GAS=true yarn test:gas
+
+      - name: '📝 Add gas report to summary'
+        run: |
+          REPORT_GAS=true yarn test:gas > gas_report.txt
+          echo "## Gas Report" >> $GITHUB_STEP_SUMMARY
+          cat gas_report.txt >> $GITHUB_STEP_SUMMARY
