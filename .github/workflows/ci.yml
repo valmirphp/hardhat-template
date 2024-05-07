@@ -12,49 +12,52 @@ jobs:
     runs-on: ubuntu-latest
     name: CI Hardhat
     steps:
-      - name: Checkout repository
+      - name: '📥 Checkout repository'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Enable Corepack before setting up Node
+      - name: '🔌 Enable Corepack before setting up Node'
         run: corepack enable
 
-      - name: Setup NodeJs
+      - name: '🔧 Setup NodeJs'
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'yarn'
 
-      - name: Yarn install
+      - name: '📦 Yarn install'
         run: yarn install
 
-      - name: Lint the code
+      - name: '🔐 Copy .env.example to .env'
+        run: cp .env.example .env
+
+      - name: '🔍 Lint the code'
         run: yarn lint
 
-      - name: 'Add lint summary'
+      - name: '📝 Add lint summary'
         run: |
           echo "## Lint results" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
 
-      - name: Compile the contracts and generate the TypeChain bindings
+      - name: '🔨 Compile the contracts and generate the TypeChain bindings'
         run: yarn typechain
 
-      - name: Test the contracts and generate the coverage report
+      - name: '🧪 Test the contracts and generate the coverage report'
         run: yarn coverage:run
 
-      - name: Check the coverage threshold
+      - name: '🔎 Check the coverage threshold'
         run: yarn coverage:check
 
-      - name: Add test summary
+      - name: '📝 Add test summary'
         run: |
           echo "## Test results" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
 
-      - name: Hardhat Tasks
+      - name: '🔧 Hardhat Tasks'
         run: |
           npx hardhat --network hardhat task:setGreeting --greeting "Bonjour, le monde"
 
-      - name: Report Gas Usage
+      - name: '📊 Report Gas Usage'
         run: |
           REPORT_GAS=true npx hardhat --network hardhat test
