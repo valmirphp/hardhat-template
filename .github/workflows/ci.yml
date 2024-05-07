@@ -10,19 +10,21 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    name: CI Hardhat
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - name: Enable Corepack before setting up Node
+        run: corepack enable
+
       - name: Setup NodeJs
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'yarn'
-        env:
-          COREPACK_ENABLE_STRICT: 0
 
       - name: Yarn install
         run: yarn install
