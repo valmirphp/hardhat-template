@@ -21,6 +21,8 @@ jobs:
         with:
           node-version: '20'
           cache: 'yarn'
+        env:
+          COREPACK_ENABLE_STRICT: 0
 
       - name: Yarn install
         run: yarn install
