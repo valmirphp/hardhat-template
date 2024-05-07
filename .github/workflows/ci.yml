@@ -33,7 +33,7 @@ jobs:
         run: cp .env.example .env
 
       - name: '🔍 Lint Solidity files'
-        run: lint:sol
+        run: yarn lint:sol
 
       - name: '🔍 Lint TypeScript files'
         run: yarn lint:ts
@@ -60,7 +60,7 @@ jobs:
           echo "## Test results" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
 
-      - name: '🪖 Hardhat Tasks'
+      - name: '🦺 Hardhat Tasks'
         run: |
           yarn hardhat task:setGreeting --greeting "Bonjour, le monde" --account 1
 
