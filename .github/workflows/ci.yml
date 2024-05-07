@@ -54,10 +54,10 @@ jobs:
           echo "## Test results" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
 
-      - name: '🔧 Hardhat Tasks'
+      - name: '🪖 Hardhat Tasks'
         run: |
-          npx hardhat --network hardhat task:setGreeting --greeting "Bonjour, le monde"
+          yarn hardhat task:setGreeting --greeting "Bonjour, le monde" --account 1        
 
       - name: '📊 Report Gas Usage'
         run: |
-          REPORT_GAS=true npx hardhat --network hardhat test
+          REPORT_GAS=true yarn test:gas
