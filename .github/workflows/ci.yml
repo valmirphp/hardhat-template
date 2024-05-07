@@ -69,7 +69,7 @@ jobs:
           REPORT_GAS=true yarn test:gas
 
       - name: '📝 Add gas report to summary'
-        run: |          
+        run: |
           REPORT_GAS=true yarn test:gas | sed 's/\x1b\[[0-9;]*m//g' > gas_report.txt
-          echo "## Gas Report" >> $GITHUB_STEP_SUMMARY
-          cat gas_report.txt >> $GITHUB_STEP_SUMMARY
+          node .github/scripts/report-gas.js      
+          cat gas_report.md >> $GITHUB_STEP_SUMMARY
