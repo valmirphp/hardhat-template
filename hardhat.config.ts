@@ -1,20 +1,19 @@
-import { resolve } from "node:path";
+import "tsconfig-paths/register";
 import "@nomicfoundation/hardhat-toolbox";
 import "@nomicfoundation/hardhat-ignition-ethers";
 import type { HardhatUserConfig } from "hardhat/config";
 import { config as dotenvConfig } from "dotenv";
-import * as envEnc from "@chainlink/env-enc";
+import { config as envEncConfig } from "@chainlink/env-enc";
 
 import utils from "./hardhat.utils";
 import "./hre/helpers";
 import "./tasks/accounts";
 import "./tasks/setGreeting";
 
-const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
-dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) });
+dotenvConfig({ path:"./.env" });
 
 if (process.env.NODE_ENV !== "test") {
-  envEnc.config({ path: "./.env.enc" });
+  envEncConfig({ path: "./.env.enc" });
 }
 
 const config: HardhatUserConfig = {
@@ -65,17 +64,16 @@ const config: HardhatUserConfig = {
     "polygon-mumbai": utils.getChainConfig("polygon-mumbai"),
     sepolia: utils.getChainConfig("sepolia"),
   },
-  // TODO mover caminhos para storage
   paths: {
-    artifacts: "./artifacts",
+    artifacts: "./storage/artifacts",
+    cache: "./storage/cache",
     ignition: "./ignition",
     sources: "./contracts",
-    cache: "./cache",
     tests: "./test",
     root: "./",
   },
   typechain: {
-    outDir: "./typechain",
+    outDir: "./storage/typechain",
     target: "ethers-v6",
   },
 };

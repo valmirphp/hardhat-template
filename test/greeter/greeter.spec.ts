@@ -1,9 +1,9 @@
-import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/dist/src/signer-with-address";
-import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import type { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/dist/src/signer-with-address";
 
-import { Greeter } from "../../types";
+import { Greeter } from "@app/typechain";
 import { deployGreeterFixture } from "./greeter.fixture";
 
 describe("Contract Greeter", function () {

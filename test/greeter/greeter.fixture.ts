@@ -1,6 +1,5 @@
 import { ethers } from "hardhat";
-
-import type { Greeter } from "../../types/Greeter";
+import type { Greeter } from "@app/typechain";
 
 export type GreeterFixture = {
   greeter: Greeter;
@@ -19,5 +18,8 @@ export async function deployGreeterFixture(): Promise<GreeterFixture> {
   const greeter = await greeterFactory.connect(admin).deploy(greeting);
   await greeter.waitForDeployment();
 
-  return { greeter, greeterAddress: await greeter.getAddress() };
+  return {
+    greeter: greeter as unknown as Greeter,
+    greeterAddress: await greeter.getAddress(),
+  };
 }

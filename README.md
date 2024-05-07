@@ -4,14 +4,23 @@
 [![built-with openzeppelin][openzeppelin-badge]][openzeppelin] [![License: MIT][license-badge]][license]
 
 [gitpod]: https://gitpod.io/#https://github.com/valmirphp/hardhat-template
+
 [gitpod-badge]: https://img.shields.io/badge/Gitpod-Open%20in%20Gitpod-FFB45B?logo=gitpod
+
 [gha]: https://github.com/valmirphp/hardhat-template/actions
+
 [gha-badge]: https://github.com/valmirphp/hardhat-template/actions/workflows/ci.yml/badge.svg
+
 [openzeppelin-badge]: https://img.shields.io/badge/built%20with-OpenZeppelin-3677FF
+
 [openzeppelin]: https://docs.openzeppelin.com/
+
 [hardhat]: https://hardhat.org/
+
 [hardhat-badge]: https://img.shields.io/badge/Built%20with-Hardhat-FFDB1C.svg
+
 [license]: https://opensource.org/licenses/MIT
+
 [license-badge]: https://img.shields.io/badge/License-MIT-blue.svg
 
 Um template baseado em Hardhat para desenvolvimento de contratos inteligentes em Solidity, com configurações
@@ -301,19 +310,23 @@ $ yarn task:setGreeting --network sepolia --greeting "Bonjour, le monde!" --acco
 
 ### Implantação de contrato
 
+> Referência: [hardhat deploy](https://hardhat.org/hardhat-runner/docs/guides/deploying)
+
 Implante os contratos na rede Hardhat:
 
 ```sh
-$ yarn deploy:contracts
+$ yarn hardhat ignition deploy ./ignition/modules/Apollo.ts --network sepolia --reset
 ```
 
 ### Verificação de contrato
+
+> Referência: [hardhat verifying](https://hardhat.org/hardhat-runner/docs/guides/verifying)
 
 Faça a verificação de um contrato implantado na rede sepolia, isso é útil para quando desejar registrar o código fonte
 do contrato na blockchain:
 
 ```sh
-$ yarn hardhat verify --network sepolia 0xxxxx "Bonjour, le monde!"
+$ npx hardhat ignition verify ./ignition/modules/Apollo.ts --network sepolia
 ```
 
 Onde `0xxxxx` é o endereço do contrato implantado, e `"Bonjour, le monde!"` é o argumento do construtor.
