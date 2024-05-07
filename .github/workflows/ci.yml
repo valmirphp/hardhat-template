@@ -1,8 +1,5 @@
 name: 'CI'
 
-env:
-  DOTENV_CONFIG_PATH: './.env.example'
-
 on:
   workflow_dispatch:
   pull_request:
@@ -12,48 +9,47 @@ on:
 
 jobs:
   ci:
-    runs-on: 'ubuntu-latest'
+    runs-on: ubuntu-latest
     steps:
-      - name: 'Check out the repo'
-        uses: 'actions/checkout@v3'
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: 'Install Node.js'
-        uses: 'actions/setup-node@v3'
+      - name: Setup NodeJs
+        uses: actions/setup-node@v4
         with:
+          node-version: '20'
           cache: 'yarn'
-          node-version: '18'
 
-      - name: 'Yarn install'
-        run: 'yarn install --immutable'
+      - name: Yarn install
+        run: yarn install
 
-      - name: 'Lint the code'
-        run: 'yarn lint'
+      - name: Lint the code
+        run: yarn lint
 
       - name: 'Add lint summary'
         run: |
           echo "## Lint results" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
 
-      - name: 'Compile the contracts and generate the TypeChain bindings'
-        run: 'yarn typechain'
+      - name: Compile the contracts and generate the TypeChain bindings
+        run: yarn typechain
 
-      - name: 'Test the contracts and generate the coverage report'
-        run: 'yarn coverage:run'
+      - name: Test the contracts and generate the coverage report
+        run: yarn coverage:run
 
-      - name: 'Check the coverage threshold'
-        run: 'yarn coverage:check'
+      - name: Check the coverage threshold
+        run: yarn coverage:check
 
-      - name: 'Add test summary'
+      - name: Add test summary
         run: |
           echo "## Test results" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
 
       - name: Hardhat Tasks
         run: |
-          npx hardhat --network hardhat task:deployGreeter --greeting Hello
-          npx hardhat --network hardhat task:deployGreeter --greeting "Bonjour, le monde"
+          npx hardhat --network hardhat task:setGreeting --greeting "Bonjour, le monde"
 
       - name: Report Gas Usage
         run: |
