@@ -4,23 +4,14 @@
 [![built-with openzeppelin][openzeppelin-badge]][openzeppelin] [![License: MIT][license-badge]][license]
 
 [gitpod]: https://gitpod.io/#https://github.com/valmirphp/hardhat-template
-
 [gitpod-badge]: https://img.shields.io/badge/Gitpod-Open%20in%20Gitpod-FFB45B?logo=gitpod
-
 [gha]: https://github.com/valmirphp/hardhat-template/actions
-
 [gha-badge]: https://github.com/valmirphp/hardhat-template/actions/workflows/ci.yml/badge.svg
-
 [openzeppelin-badge]: https://img.shields.io/badge/built%20with-OpenZeppelin-3677FF
-
 [openzeppelin]: https://docs.openzeppelin.com/
-
 [hardhat]: https://hardhat.org/
-
 [hardhat-badge]: https://img.shields.io/badge/Built%20with-Hardhat-FFDB1C.svg
-
 [license]: https://opensource.org/licenses/MIT
-
 [license-badge]: https://img.shields.io/badge/License-MIT-blue.svg
 
 Um template baseado em Hardhat para desenvolvimento de contratos inteligentes em Solidity, com configurações

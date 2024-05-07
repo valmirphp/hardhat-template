@@ -11,7 +11,7 @@ import "./hre/helpers";
 import "./tasks/accounts";
 import "./tasks/setGreeting";
 
-dotenvConfig({ path:"./.env" });
+dotenvConfig({ path: "./.env" });
 
 if (process.env.NODE_ENV !== "test") {
   envEncConfig({ path: "./.env.enc" });
