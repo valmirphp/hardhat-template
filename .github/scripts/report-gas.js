@@ -49,7 +49,7 @@ rl.on('line', (line) => {
     matchBottom[1]?.trim() !== 'Contract'
   ) {
     if (firstBottomLine) {
-      markdownTable += '| Deployments| | | | | % of limit | |\n';
+      markdownTable += '| **Deployments** | | | | | **% of limit** | |\n';
       firstBottomLine = false;
     }
 
