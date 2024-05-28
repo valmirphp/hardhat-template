@@ -301,7 +301,17 @@ $ yarn task:setGreeting --greeting "Bonjour, le monde!" --account 3 --network se
 
 > Referência: [hardhat deploy](https://hardhat.org/hardhat-runner/docs/guides/deploying)
 
-Implante os contratos na rede Hardhat:
+Implante os contratos na rede sepolia:
+
+```sh
+$ yarn hardhat ignition deploy ./ignition/modules/Greeter.ts --network sepolia
+```
+
+### ReImplantação do contrato
+
+> Referência: [hardhat deploy](https://hardhat.org/hardhat-runner/docs/guides/deploying)
+
+Para reimplantar um contrato, use a flag `--reset`:
 
 ```sh
 $ yarn hardhat ignition deploy ./ignition/modules/Greeter.ts --network sepolia --reset
@@ -315,8 +325,12 @@ Faça a verificação de um contrato implantado na rede sepolia, isso é útil p
 do contrato na blockchain:
 
 ```sh
-$ yarn hardhat ignition verify ./ignition/modules/Greeter.ts --network sepolia
+$ yarn hardhat ignition deploy ./ignition/modules/Greeter.ts --network sepolia --verify
+
 ```
+
+Obs: Precisa de uma conta na Etherscan para fazer a verificação. Configure suas chaves de `ETHERSCAN_API_KEY` no arquivo
+`.env`.
 
 ## Using GitPod
 

@@ -2,15 +2,16 @@ import type { HardhatNetworkAccountsUserConfig } from 'hardhat/types/config';
 import type { NetworkUserConfig } from 'hardhat/types';
 
 const chainIds = {
-  'arbitrum-mainnet': 42161,
+  arbitrum: 42161,
   avalanche: 43114,
   bsc: 56,
+  'bsc-testnet': 97,
   ganache: 1337,
   hardhat: 31337,
   mainnet: 1,
-  'optimism-mainnet': 10,
-  'polygon-mainnet': 137,
-  'polygon-mumbai': 80001,
+  optimism: 10,
+  polygon: 137,
+  mumbai: 80001,
   sepolia: 11155111,
 };
 
@@ -51,10 +52,11 @@ function getAccountConfig(chain: keyof typeof chainIds): HardhatNetworkAccountsU
   const privateKey = getHwPrivateKey();
   const requirePrivateKey: Array<keyof typeof chainIds> = [
     'bsc',
+    'bsc-testnet',
     'ganache',
     'mainnet',
-    'polygon-mainnet',
-    'polygon-mumbai',
+    'polygon',
+    'mumbai',
     'sepolia',
   ];
 
@@ -81,13 +83,24 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
       jsonRpcUrl = 'https://bsc-dataseed1.binance.org';
       break;
 
+    case 'bsc-testnet':
+      jsonRpcUrl = 'https://data-seed-prebsc-1-s1.binance.org:8545';
+      return {
+        accounts: {
+          mnemonic: getMnemonic(),
+        },
+        chainId: 97,
+        gasPrice: 20000000000,
+        url: jsonRpcUrl,
+      };
+
     case 'sepolia':
-    case 'polygon-mumbai':
+    case 'mumbai':
       jsonRpcUrl = getAlchemyUri(false);
       break;
 
     case 'mainnet':
-    case 'polygon-mainnet':
+    case 'polygon':
       jsonRpcUrl = getAlchemyUri(true);
       break;
 
