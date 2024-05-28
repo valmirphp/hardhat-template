@@ -56,13 +56,14 @@ const config: HardhatUserConfig = {
       chainId: utils.chainIds.ganache,
       url: 'http://127.0.0.1:7545',
     },
-    arbitrum: utils.getChainConfig('arbitrum-mainnet'),
+    arbitrum: utils.getChainConfig('arbitrum'),
     avalanche: utils.getChainConfig('avalanche'),
     bsc: utils.getChainConfig('bsc'),
+    'bsc-testnet': utils.getChainConfig('bsc-testnet'),
     mainnet: utils.getChainConfig('mainnet'),
-    optimism: utils.getChainConfig('optimism-mainnet'),
-    'polygon-mainnet': utils.getChainConfig('polygon-mainnet'),
-    'polygon-mumbai': utils.getChainConfig('polygon-mumbai'),
+    optimism: utils.getChainConfig('optimism'),
+    polygon: utils.getChainConfig('polygon'),
+    mumbai: utils.getChainConfig('mumbai'),
     sepolia: utils.getChainConfig('sepolia'),
   },
   paths: {
@@ -73,10 +74,6 @@ const config: HardhatUserConfig = {
     tests: './test',
     root: './',
   },
-  typechain: {
-    outDir: './storage/typechain',
-    target: 'ethers-v6',
-  },
   solidity: {
     version: '0.8.24',
     settings: {
@@ -85,6 +82,10 @@ const config: HardhatUserConfig = {
         runs: 200,
       },
     },
+  },
+  typechain: {
+    outDir: './storage/typechain',
+    target: 'ethers-v6',
   },
 };
 
